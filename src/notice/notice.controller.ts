@@ -1,19 +1,19 @@
+// notice.controller.ts
+
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { NoticeService } from './notice.service';
 
 @Controller('notice')
 export class NoticeController {
-  @Get()
-  getAllNotices() {
-    return { message: 'Here are all notices' };
-  }
+  constructor(private readonly noticeService: NoticeService) {}
 
   @Get(':id')
   getNotice(@Param('id') id: string) {
-    return { id };
+    return this.noticeService.getNotice(id);
   }
 
   @Post()
   createNotice(@Body() body: { title: string; content: string }) {
-    return { message: 'created', data: body };
+    return this.noticeService.createNotice(body);
   }
 }
